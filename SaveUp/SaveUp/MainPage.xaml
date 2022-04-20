@@ -34,12 +34,14 @@
                Grid.Row="3"
                VerticalTextAlignment="Start"/>
 
-        <Button Text="Einsichht" Style="{StaticResource SquareButtons}"
+        <Button Text="Einsicht" Style="{StaticResource SquareButtons}" 
                 Grid.Row="4" 
-                Grid.Column="0"/>
+                Grid.Column="0"
+                Command="{Binding OpenList}"/>
         <Button Text="Neu" Style="{StaticResource SquareButtons}"
                 Grid.Row="4" 
-                Grid.Column="2"/>
+                Grid.Column="2"
+                Command="{Binding OpenAdd}"/>
 
     </Grid>
 

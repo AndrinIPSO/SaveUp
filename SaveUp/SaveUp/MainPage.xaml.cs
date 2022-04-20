@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using SaveUp.View;
+using SaveUp.ViewModel;
 
 namespace SaveUp
 {
@@ -12,6 +14,7 @@ namespace SaveUp
     {
         public MainPage()
         {
+            BindingContext = new MainViewModel();
             InitializeComponent();
         }
     }

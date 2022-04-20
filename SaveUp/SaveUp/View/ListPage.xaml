@@ -2,11 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SaveUp.View.ListPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Label Text="Spar Einträge" Style="{StaticResource Title}"/>
+        <!-- https://www.technical-recipes.com/2016/inserting-button-controls-into-a-wpf-listview-and-handling-their-click-events/ -->
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding EintragDaten}">
+            
+        </ListView>
+        <Button Text="Alle löschen!" Style="{StaticResource SquareButtons}"
+                Grid.Row="2"
+                BackgroundColor="Red"/>
+    </Grid>
 </ContentPage>

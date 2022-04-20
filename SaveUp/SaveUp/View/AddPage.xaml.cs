@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SaveUp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,9 @@ namespace SaveUp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddPage : ContentPage
     {
-        public AddPage()
+        public AddPage(AddViewModel avm)
         {
+            BindingContext = avm;
             InitializeComponent();
         }
     }
