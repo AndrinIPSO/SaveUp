@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SaveUp.MainPage">
+             x:Class="SaveUp.MainPage"
+>
+
+
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -22,7 +26,7 @@
                Grid.Row="1"
                VerticalTextAlignment="End"/>
         
-        <Label Text="221 CHF" Style="{StaticResource Text}" 
+        <Label Text="{Binding Gesamtbetrag}" Style="{StaticResource Text}" 
                Grid.Column="0" 
                Grid.ColumnSpan="3" 
                Grid.Row="2"

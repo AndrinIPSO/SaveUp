@@ -1,7 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SaveUp.View.AddPage">
+             x:Class="SaveUp.View.AddPage"
+             >
+<!--
+    
+    xmlns:local="clr-namespace:SaveUp.ViewModel"
+    <ContentPage.BindingContext>
+        <local:AddViewModel/>
+    </ContentPage.BindingContext>
+    
+-->
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -11,13 +21,14 @@
         </Grid.RowDefinitions>
 
         <Label Text="Neuer Eintrag" Style="{StaticResource Title}"/>
-        <Entry Placeholder="Name"
+        <Entry Placeholder="Name" Text="{Binding Name}"
                Grid.Row="1"/>
-        <Entry Placeholder="Betrag" 
-               Grid.Row="2"/>
-        <Entry Placeholder="Kurzbeschreibung"
+        <Entry Text="{Binding Betrag}"
+               Grid.Row="2"
+               Keyboard="Numeric"/>
+        <Entry Placeholder="Kurzbeschreibung" Text="{Binding Beschreibung}"
                Grid.Row="3"/>
-        <Button Text="Sparen" Style="{StaticResource SquareButtons}"
+        <Button Text="Sparen" Style="{StaticResource SquareButtons}" Command="{Binding Add}"
                 Grid.Row="4"/>
 
     </Grid>

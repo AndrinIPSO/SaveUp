@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SaveUp.View.ListPage">
+             x:Class="SaveUp.View.ListPage"
+>
+    
+
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -10,11 +14,35 @@
         <Label Text="Spar Einträge" Style="{StaticResource Title}"/>
         <!-- https://www.technical-recipes.com/2016/inserting-button-controls-into-a-wpf-listview-and-handling-their-click-events/ -->
         <ListView Grid.Row="1"
-                  ItemsSource="{Binding EintragDaten}">
-            
+                  ItemsSource="{Binding EintragDaten}"
+                  Header="Test"
+                  SeparatorColor="Red">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Name}" Style="{StaticResource Text}"/>
+                            <Label  Text="{Binding Beschreibung}" Style="{StaticResource Text}" Grid.Column="1"/>
+                            <Label  Text="{Binding Betrag}" Style="{StaticResource Text}" Grid.Column="2"/>
+                            <Button Text="DELETE" Grid.Column="3"/>
+
+                        </Grid>
+                        
+                    </ViewCell>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+                    
         </ListView>
+
         <Button Text="Alle löschen!" Style="{StaticResource SquareButtons}"
                 Grid.Row="2"
-                BackgroundColor="Red"/>
+                BackgroundColor="Red"
+                Command="{Binding DeleteAll}"/>
     </Grid>
 </ContentPage>

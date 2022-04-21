@@ -10,5 +10,6 @@ namespace SaveUp.Model
         public float Betrag { get; set; }
         public string Beschreibung { get; set; }
         public DateTime Datum { get; set; }
+        public int id { get; set; }
     }
 }
