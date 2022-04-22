@@ -38,6 +38,14 @@ namespace SaveUp.ViewModel
          void AddItem()
         {
             Datum = DateTime.Now.ToString("dd.mm.yyyy");
+            if (eintragdaten.Count == 0)
+            {
+                ID = 0;
+            }
+            else
+            {
+                ID = eintragdaten[eintragdaten.Count - 1].id + 1;
+            }
             eintragdaten.Add(tempModel);
             MainViewModel mvm = new MainViewModel(eintragdaten);
             Application.Current.MainPage.BindingContext = mvm;
@@ -89,6 +97,16 @@ namespace SaveUp.ViewModel
             set
             {
                 tempModel.Betrag = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int ID
+        {
+            get { return tempModel.id; }
+            set
+            {
+                tempModel.id = value;
                 OnPropertyChanged();
             }
         }

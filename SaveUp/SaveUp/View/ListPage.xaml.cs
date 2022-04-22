@@ -18,5 +18,10 @@ namespace SaveUp.View
             BindingContext = lvm;
             InitializeComponent();
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            
+        }
     }
 }
