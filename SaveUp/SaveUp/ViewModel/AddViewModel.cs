@@ -35,15 +35,19 @@ namespace SaveUp.ViewModel
             
         }
 
-        async void AddItem()
+         void AddItem()
         {
-            Datum = DateTime.Now;
+            Datum = DateTime.Now.ToString("dd.mm.yyyy");
             eintragdaten.Add(tempModel);
             MainViewModel mvm = new MainViewModel(eintragdaten);
             Application.Current.MainPage.BindingContext = mvm;
+            mvm.Gesamtbetrag = this.Gesamtbetrag;
+            App.Current.MainPage = new NavigationPage(new MainPage(mvm));
 
-            await Application.Current.MainPage.Navigation.PopAsync();
+            
 
+            //await Application.Current.MainPage.Navigation.PushAsync(App.Current.MainPage);
+            //Application.Current.MainPage.Navigation.RemovePage(Application.Current.MainPage.Navigation.NavigationStack[Application.Current.MainPage.Navigation.NavigationStack.Count -1]);
             //ListViewModel lvm = new ListViewModel();
             //lvm.EintragDaten.Add(tempModel);
             //await Application.Current.MainPage.Navigation.PushAsync(new ListPage(lvm));
@@ -69,7 +73,7 @@ namespace SaveUp.ViewModel
             }
         }
 
-        public DateTime Datum
+        public string Datum
         {
             get { return tempModel.Datum; }
             set
@@ -88,5 +92,19 @@ namespace SaveUp.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public float Gesamtbetrag
+        {
+            get
+            {
+                float gesamtfloat = 0;
+                foreach (var item in EintragDaten)
+                {
+                    gesamtfloat += item.Betrag;
+                }
+                return gesamtfloat;
+            }
+        }
+
     }
 }

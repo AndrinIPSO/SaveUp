@@ -16,7 +16,13 @@ namespace SaveUp
         {
             BindingContext = new MainViewModel();
             InitializeComponent();
-        } 
+        }
+        public MainPage(MainViewModel mvm)
+        {
+            BindingContext = mvm;
+            InitializeComponent();
+
+        }
 
     }
 }

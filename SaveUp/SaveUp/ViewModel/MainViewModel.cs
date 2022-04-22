@@ -11,7 +11,7 @@ namespace SaveUp.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        ObservableCollection<EintragModel> eintragdaten = new ObservableCollection<EintragModel>();
+        private ObservableCollection<EintragModel> eintragdaten = new ObservableCollection<EintragModel>();
         public ObservableCollection<EintragModel> EintragDaten
         {
             get { return eintragdaten; }
@@ -24,6 +24,8 @@ namespace SaveUp.ViewModel
                 }
             }
         }
+
+        private float _gesamtbetrag = 0;
         public Command OpenAdd { get; }
         public Command OpenList { get; }
 
@@ -40,25 +42,26 @@ namespace SaveUp.ViewModel
             OpenList = new Command(OpenListPage);
         }
 
-        string calcGesamt()
-        {
-            float gesamtfloat = 0;
-            foreach (var item in EintragDaten)
-            {
-                gesamtfloat += item.Betrag;
-            }
-            Debug.WriteLine("Gesamtbetrag");
-            return gesamtfloat.ToString();
-        }
+        //string calcGesamt()
+        //{
+        //    float gesamtfloat = 0;
+        //    foreach (var item in EintragDaten)
+        //    {
+        //        gesamtfloat += item.Betrag;
+        //    }
+        //    Debug.WriteLine("Gesamtbetrag");
+        //    return gesamtfloat.ToString();
+        //}
 
-        public string Gesamtbetrag
+        public float Gesamtbetrag
         {
             get
             {
-                return calcGesamt();
+                return _gesamtbetrag;
             }
             set
             {
+                _gesamtbetrag = value;
                 OnPropertyChanged();
             }
         }
