@@ -25,8 +25,8 @@
                Grid.ColumnSpan="3" 
                Grid.Row="1"
                VerticalTextAlignment="End"/>
-        
-        <Label Text="{Binding Gesamtbetrag}" Style="{StaticResource Text}" 
+
+        <Label Text="{Binding Gesamtbetrag, StringFormat='{0:F0} CHF'}" Style="{StaticResource Text}" 
                Grid.Column="0" 
                Grid.ColumnSpan="3" 
                Grid.Row="2"

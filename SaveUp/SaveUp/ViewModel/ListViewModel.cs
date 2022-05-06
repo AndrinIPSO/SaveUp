@@ -37,6 +37,7 @@ namespace SaveUp.ViewModel
             Delete = new Command<int>(id => { delete(id); });
         }
 
+
         async void delAll()
         {
             if (eintragdaten.Count ==0)
@@ -56,32 +57,41 @@ namespace SaveUp.ViewModel
 
         async void delete(int id)
         {
-            int index = 0;
-            try
-            {
-                bool delall = await App.Current.MainPage.DisplayAlert("Löschen", "Eintrag löschen?", "Ja", "Ah nei doch nöd");
-                if (delall)
+            bool del = await App.Current.MainPage.DisplayAlert("Löschen", "Eintrag löschen?", "Ja", "Ah nei doch nöd");
+                if (del)
                 {
                     ObservableCollection<EintragModel> templist = eintragdaten;
-                    foreach (var item in templist)
+
+                    for (int i = templist.Count -1; i >= 0; i--)
                     {
-                        if (item.id == id)
+                        if (id == templist[i].id)
                         {
-                            
-                            index = templist.IndexOf(item);
-                            templist.RemoveAt(index);
+                            templist.Remove(templist[i]);
                         }
                     }
                     EintragDaten = templist;
+
                 }
                 else
                 {
                     return ;
                 }
-            } catch (Exception ex)
+                MainViewModel mvm = new MainViewModel(eintragdaten);
+                Application.Current.MainPage.BindingContext = mvm;
+                mvm.Gesamtbetrag = this.Gesamtbetrag;
+                App.Current.MainPage = new NavigationPage(new MainPage(mvm));
+
+        }
+        public float Gesamtbetrag
+        {
+            get
             {
-                // Wirft einen Fehler, es funktioniert jedoch alles?
-                return ;
+                float gesamtfloat = 0;
+                foreach (var item in EintragDaten)
+                {
+                    gesamtfloat += item.Betrag;
+                }
+                return gesamtfloat;
             }
         }
     }

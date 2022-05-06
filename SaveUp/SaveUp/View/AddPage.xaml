@@ -25,9 +25,9 @@
                Grid.Row="1"/>
         <Entry Text="{Binding Betrag}"
                Grid.Row="2"
+               Placeholder="123"
                Keyboard="Numeric"/>
-        <Entry Placeholder="Kurzbeschreibung" Text="{Binding Beschreibung}"
-               Grid.Row="3"/>
+
         <Button Text="Sparen" Style="{StaticResource SquareButtons}" Command="{Binding Add}"
                 Grid.Row="4"/>
 

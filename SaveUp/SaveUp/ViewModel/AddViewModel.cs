@@ -37,7 +37,7 @@ namespace SaveUp.ViewModel
 
          void AddItem()
         {
-            Datum = DateTime.Now.ToString("dd.mm.yyyy");
+            Datum = DateTime.Now.ToString("dd.MM.yyyy");
             if (eintragdaten.Count == 0)
             {
                 ID = 0;
