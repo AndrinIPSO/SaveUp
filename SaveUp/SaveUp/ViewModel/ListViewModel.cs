@@ -1,9 +1,5 @@
 ﻿using SaveUp.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -14,15 +10,17 @@ namespace SaveUp.ViewModel
     public class ListViewModel : ViewModelBase
     {
         ObservableCollection<EintragModel> eintragdaten = new ObservableCollection<EintragModel>();
-        public ObservableCollection<EintragModel> EintragDaten { 
-            get { return eintragdaten; } 
-            set {
+        public ObservableCollection<EintragModel> EintragDaten
+        {
+            get { return eintragdaten; }
+            set
+            {
                 if (eintragdaten != value)
                 {
                     eintragdaten = value;
                     OnPropertyChanged();
                 }
-            } 
+            }
         }
 
         public Command DeleteAll { get; }
@@ -40,7 +38,7 @@ namespace SaveUp.ViewModel
 
         async void delAll()
         {
-            if (eintragdaten.Count ==0)
+            if (eintragdaten.Count == 0)
             {
                 return;
             }
@@ -58,28 +56,28 @@ namespace SaveUp.ViewModel
         async void delete(int id)
         {
             bool del = await App.Current.MainPage.DisplayAlert("Löschen", "Eintrag löschen?", "Ja", "Ah nei doch nöd");
-                if (del)
-                {
-                    ObservableCollection<EintragModel> templist = eintragdaten;
+            if (del)
+            {
+                ObservableCollection<EintragModel> templist = eintragdaten;
 
-                    for (int i = templist.Count -1; i >= 0; i--)
+                for (int i = templist.Count - 1; i >= 0; i--)
+                {
+                    if (id == templist[i].id)
                     {
-                        if (id == templist[i].id)
-                        {
-                            templist.Remove(templist[i]);
-                        }
+                        templist.Remove(templist[i]);
                     }
-                    EintragDaten = templist;
+                }
+                EintragDaten = templist;
 
-                }
-                else
-                {
-                    return ;
-                }
-                MainViewModel mvm = new MainViewModel(eintragdaten);
-                Application.Current.MainPage.BindingContext = mvm;
-                mvm.Gesamtbetrag = this.Gesamtbetrag;
-                App.Current.MainPage = new NavigationPage(new MainPage(mvm));
+            }
+            else
+            {
+                return;
+            }
+            MainViewModel mvm = new MainViewModel(eintragdaten);
+            Application.Current.MainPage.BindingContext = mvm;
+            mvm.Gesamtbetrag = this.Gesamtbetrag;
+            App.Current.MainPage = new NavigationPage(new MainPage(mvm));
 
         }
         public float Gesamtbetrag

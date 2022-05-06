@@ -1,9 +1,6 @@
 ﻿using SaveUp.Model;
-using SaveUp.View;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using Xamarin.Forms;
 
 namespace SaveUp.ViewModel
@@ -14,7 +11,15 @@ namespace SaveUp.ViewModel
         /// Wird verwendet um später ein vollständiges Objekt der Liste anzufügen
         /// </summary>
         private EintragModel tempModel;
+
+        /// <summary>
+        /// Daten kollektion (liste) -> wird an alle viremodels weitergegeben
+        /// </summary>
         ObservableCollection<EintragModel> eintragdaten = new ObservableCollection<EintragModel>();
+
+        /// <summary>
+        /// Datenliste mit OnPropertyChanged(); -> verändert liste für weitergabe
+        /// </summary>
         public ObservableCollection<EintragModel> EintragDaten
         {
             get { return eintragdaten; }
@@ -27,15 +32,24 @@ namespace SaveUp.ViewModel
                 }
             }
         }
+        /// <summary>
+        /// Ruft addItem funktion auf
+        /// </summary>
         public Command Add { get; }
+        /// <summary>
+        /// Init von Command und tempörärem Model
+        /// </summary>
         public AddViewModel()
         {
             Add = new Command(AddItem);
             tempModel = new EintragModel();
-            
+
         }
 
-         void AddItem()
+        /// <summary>
+        /// Fügt neues Model ein, wechselt zur Mainpage
+        /// </summary>
+        void AddItem()
         {
             Datum = DateTime.Now.ToString("dd.MM.yyyy");
             if (eintragdaten.Count == 0)
@@ -48,19 +62,14 @@ namespace SaveUp.ViewModel
             }
             eintragdaten.Add(tempModel);
             MainViewModel mvm = new MainViewModel(eintragdaten);
-            Application.Current.MainPage.BindingContext = mvm;
+            Application.Current.MainPage.BindingContext = mvm; // << Villeicht weglassen?
             mvm.Gesamtbetrag = this.Gesamtbetrag;
             App.Current.MainPage = new NavigationPage(new MainPage(mvm));
-
-            
-
-            //await Application.Current.MainPage.Navigation.PushAsync(App.Current.MainPage);
-            //Application.Current.MainPage.Navigation.RemovePage(Application.Current.MainPage.Navigation.NavigationStack[Application.Current.MainPage.Navigation.NavigationStack.Count -1]);
-            //ListViewModel lvm = new ListViewModel();
-            //lvm.EintragDaten.Add(tempModel);
-            //await Application.Current.MainPage.Navigation.PushAsync(new ListPage(lvm));
         }
 
+        /// <summary>
+        /// Verändert Name des tempörären Models (typ = EintragModel)
+        /// </summary>
         public string Name
         {
             get { return tempModel.Name; }
@@ -70,17 +79,9 @@ namespace SaveUp.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        public string Beschreibung
-        {
-            get { return tempModel.Beschreibung; }
-            set
-            {
-                tempModel.Beschreibung = value;
-                OnPropertyChanged();
-            }
-        }
-
+        /// <summary>
+        /// Verändert Datum des tempörären Models (typ = EintragModel)
+        /// </summary>
         public string Datum
         {
             get { return tempModel.Datum; }
@@ -90,7 +91,9 @@ namespace SaveUp.ViewModel
                 OnPropertyChanged();
             }
         }
-
+        /// <summary>
+        /// Verändert Betrag des tempörären Models (typ = EintragModel)
+        /// </summary>
         public float Betrag
         {
             get { return tempModel.Betrag; }
@@ -100,7 +103,9 @@ namespace SaveUp.ViewModel
                 OnPropertyChanged();
             }
         }
-
+        /// <summary>
+        /// Verändert ID des tempörären Models (typ = EintragModel) --> wird für delete benötigt
+        /// </summary>
         public int ID
         {
             get { return tempModel.id; }
@@ -110,7 +115,9 @@ namespace SaveUp.ViewModel
                 OnPropertyChanged();
             }
         }
-
+        /// <summary>
+        /// Gesamtbetrag berechnen für MainViewModel
+        /// </summary>
         public float Gesamtbetrag
         {
             get
