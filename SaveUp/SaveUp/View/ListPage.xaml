@@ -25,7 +25,7 @@
                             </Grid.ColumnDefinitions>
                             <Label Text="{Binding Name}" Style="{StaticResource listlabel}"/>
                             <Label  Text="{Binding Datum}" Style="{StaticResource listlabel}" Grid.Column="1"/>
-                            <Label  Text="{Binding Betrag, StringFormat='{0:F0} CHF'}" Style="{StaticResource listlabel}" Grid.Column="2"/>
+                            <Label  Text="{Binding Betrag, StringFormat='{0:c}'}" Style="{StaticResource listlabel}" Grid.Column="2"/>
                             <Button Text="DELETE" Grid.Column="3" Command="{Binding Source={x:Reference listView}, Path=BindingContext.Delete}" CommandParameter="{Binding id}"/>
 
                         </Grid>
