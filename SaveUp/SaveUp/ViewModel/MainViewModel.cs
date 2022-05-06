@@ -7,7 +7,13 @@ namespace SaveUp.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Daten kollektion (liste) -> wird an alle viremodels weitergegeben
+        /// </summary>
         private ObservableCollection<EintragModel> eintragdaten = new ObservableCollection<EintragModel>();
+        /// <summary>
+        /// Datenliste mit OnPropertyChanged(); -> verändert liste für weitergabe
+        /// </summary>
         public ObservableCollection<EintragModel> EintragDaten
         {
             get { return eintragdaten; }
@@ -20,35 +26,39 @@ namespace SaveUp.ViewModel
                 }
             }
         }
-
+        /// <summary>
+        /// Gesamtbetrag wird in andern Viewmodels berechnet. 
+        /// </summary>
         private float _gesamtbetrag = 0;
+        /// <summary>
+        /// Öffnet AddSeite
+        /// </summary>
         public Command OpenAdd { get; }
+        /// <summary>
+        /// Öffnet ListSeite
+        /// </summary>
         public Command OpenList { get; }
-
+        /// <summary>
+        /// Init der Commands
+        /// </summary>
         public MainViewModel()
         {
             OpenAdd = new Command(OpenAddPage);
             OpenList = new Command(OpenListPage);
         }
-
+        /// <summary>
+        /// Init Commands und übergabe Datenmodel(liste)
+        /// </summary>
+        /// <param name="list">Model liste</param>
         public MainViewModel(ObservableCollection<EintragModel> list)
         {
             EintragDaten = list;
             OpenAdd = new Command(OpenAddPage);
             OpenList = new Command(OpenListPage);
         }
-
-        //string calcGesamt()
-        //{
-        //    float gesamtfloat = 0;
-        //    foreach (var item in EintragDaten)
-        //    {
-        //        gesamtfloat += item.Betrag;
-        //    }
-        //    Debug.WriteLine("Gesamtbetrag");
-        //    return gesamtfloat.ToString();
-        //}
-
+        /// <summary>
+        /// Verändern Gesamtbetrag (get/set)
+        /// </summary>
         public float Gesamtbetrag
         {
             get
@@ -61,7 +71,9 @@ namespace SaveUp.ViewModel
                 OnPropertyChanged();
             }
         }
-
+        /// <summary>
+        /// Öffnet AddSeite und übergibt Datenliste
+        /// </summary>
         async void OpenAddPage()
         {
             AddViewModel avm = new AddViewModel();
@@ -69,13 +81,14 @@ namespace SaveUp.ViewModel
             await Application.Current.MainPage.Navigation.PushAsync(new AddPage(avm));
 
         }
-
+        /// <summary>
+        /// Öffnet ListenSeite und übergibt Datenliste
+        /// </summary>
         async void OpenListPage()
         {
             ListViewModel lvm = new ListViewModel();
             lvm.EintragDaten = this.EintragDaten;
             await Application.Current.MainPage.Navigation.PushAsync(new ListPage(lvm));
         }
-
     }
 }

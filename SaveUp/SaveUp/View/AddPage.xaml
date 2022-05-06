@@ -4,7 +4,7 @@
              x:Class="SaveUp.View.AddPage"
              >
 <!--
-    
+    Funktioniert nicht wegen Übergabe in Konstruktor
     xmlns:local="clr-namespace:SaveUp.ViewModel"
     <ContentPage.BindingContext>
         <local:AddViewModel/>
@@ -19,7 +19,6 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
         <Label Text="Neuer Eintrag" Style="{StaticResource Title}"/>
         <Entry Placeholder="Name" Text="{Binding Name}"
                Grid.Row="1"/>
@@ -27,9 +26,7 @@
                Grid.Row="2"
                Placeholder="123"
                Keyboard="Numeric"/>
-
         <Button Text="Sparen" Style="{StaticResource SquareButtons}" Command="{Binding Add}"
                 Grid.Row="4"/>
-
     </Grid>
 </ContentPage>

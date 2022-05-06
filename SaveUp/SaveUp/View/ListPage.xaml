@@ -3,16 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SaveUp.View.ListPage"
              x:Name="listView">
-    
-
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Label Text="Spar Einträge" Style="{StaticResource Title}"/>
-        <!-- https://www.technical-recipes.com/2016/inserting-button-controls-into-a-wpf-listview-and-handling-their-click-events/ -->
         <ListView Grid.Row="1"
                   ItemsSource="{Binding EintragDaten}"
                   SeparatorColor="Gray"
@@ -38,9 +34,7 @@
 
                 </DataTemplate>
             </ListView.ItemTemplate>
-                    
         </ListView>
-
         <Button Text="Alle löschen!" Style="{StaticResource SquareButtons}"
                 Grid.Row="2"
                 BackgroundColor="Red"

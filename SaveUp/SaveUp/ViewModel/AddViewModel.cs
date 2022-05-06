@@ -11,12 +11,10 @@ namespace SaveUp.ViewModel
         /// Wird verwendet um später ein vollständiges Objekt der Liste anzufügen
         /// </summary>
         private EintragModel tempModel;
-
         /// <summary>
         /// Daten kollektion (liste) -> wird an alle viremodels weitergegeben
         /// </summary>
         ObservableCollection<EintragModel> eintragdaten = new ObservableCollection<EintragModel>();
-
         /// <summary>
         /// Datenliste mit OnPropertyChanged(); -> verändert liste für weitergabe
         /// </summary>
@@ -45,7 +43,6 @@ namespace SaveUp.ViewModel
             tempModel = new EintragModel();
 
         }
-
         /// <summary>
         /// Fügt neues Model ein, wechselt zur Mainpage
         /// </summary>
@@ -66,7 +63,6 @@ namespace SaveUp.ViewModel
             mvm.Gesamtbetrag = this.Gesamtbetrag;
             App.Current.MainPage = new NavigationPage(new MainPage(mvm));
         }
-
         /// <summary>
         /// Verändert Name des tempörären Models (typ = EintragModel)
         /// </summary>
@@ -130,6 +126,5 @@ namespace SaveUp.ViewModel
                 return gesamtfloat;
             }
         }
-
     }
 }
