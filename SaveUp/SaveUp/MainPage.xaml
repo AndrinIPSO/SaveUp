@@ -4,16 +4,19 @@
              x:Class="SaveUp.MainPage">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition />
+            <RowDefinition />
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="1" />
         </Grid.ColumnDefinitions>
-        <Label Text="SaveUp" Style="{StaticResource Title}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"/>
+        <Label Text="SaveUp" Style="{StaticResource Title}" 
+               Grid.Column="0" 
+               Grid.ColumnSpan="3" 
+               Grid.Row="0"/>
         <Label Text="Schon" Style="{StaticResource Text}" 
                Grid.Column="0" 
                Grid.ColumnSpan="3" 
@@ -33,7 +36,9 @@
         <Button Text="Einsicht" Style="{StaticResource SquareButtons}" 
                 Grid.Row="4" 
                 Grid.Column="0"
-                Command="{Binding OpenList}"/>
+                Command="{Binding OpenList}"
+                />
+                
         <Button Text="Neu" Style="{StaticResource SquareButtons}"
                 Grid.Row="4" 
                 Grid.Column="2"

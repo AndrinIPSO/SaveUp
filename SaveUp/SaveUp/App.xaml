@@ -50,10 +50,28 @@
                 <Setter Property="CornerRadius" Value="20"/>
                 <Setter Property="Margin" Value="15"/>
             </Style>
+            <Style x:Key="deleteButtons" TargetType="Button">
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Margin" Value="15"/>
+                <Setter Property="BackgroundColor" Value="#F9AA9C"/>
+                <Setter Property="BorderColor" Value="#86B2F7"/>
+                <Setter Property="BorderWidth" Value="2"/>
+            </Style>
+
+            <Style x:Key="deleteImageButtons" TargetType="ImageButton">
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="Margin" Value="15"/>
+                <Setter Property="BackgroundColor" Value="#F9AA9C"/>
+                <Setter Property="BorderColor" Value="#86B2F7"/>
+                <Setter Property="BorderWidth" Value="2"/>
+            </Style>
+
+
+
             <Style x:Key="listlabel" TargetType="Label">
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
                 <Setter Property="VerticalTextAlignment" Value="Center"/>
-                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontSize" Value="16"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -23,10 +23,25 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Label Text="{Binding Name}" Style="{StaticResource listlabel}"/>
-                            <Label  Text="{Binding Datum}" Style="{StaticResource listlabel}" Grid.Column="1"/>
-                            <Label  Text="{Binding Betrag, StringFormat='{0:c}'}" Style="{StaticResource listlabel}" Grid.Column="2"/>
-                            <Button Text="DELETE" Grid.Column="3" Command="{Binding Source={x:Reference listView}, Path=BindingContext.Delete}" CommandParameter="{Binding id}"/>
+                            <Label  Text="{Binding Name}" 
+                                    Style="{StaticResource listlabel}"
+                                    HorizontalOptions="Start"
+                                    Margin="10"/>
+                                    
+                            <Label  Text="{Binding Datum}" 
+                                    Style="{StaticResource listlabel}" 
+                                    Grid.Column="1"/>
+                            <Label  Text="{Binding Betrag, StringFormat='{0:c}'}" 
+                                    Style="{StaticResource listlabel}" 
+                                    Grid.Column="2"/>
+                            <Button Text="Löschen" 
+                                         Style="{StaticResource deleteButtons}" 
+                                         Grid.Column="3" 
+                                         Padding="5"
+                                         Margin="5"
+                                         Command="{Binding Source={x:Reference listView}, Path=BindingContext.Delete}" 
+                                         CommandParameter="{Binding id}"/>
+
 
                         </Grid>
                         
@@ -35,9 +50,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Alle löschen!" Style="{StaticResource SquareButtons}"
+        <Button Text="Alle löschen!" Style="{StaticResource deleteButtons}"
                 Grid.Row="2"
-                BackgroundColor="Red"
                 Command="{Binding DeleteAll}"/>
     </Grid>
 </ContentPage>
