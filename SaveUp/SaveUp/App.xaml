@@ -4,6 +4,38 @@
              x:Class="SaveUp.App">
     <Application.Resources>
         <ResourceDictionary>
+
+            <!-- Pallete -->
+            <Color x:Key="panel">#4a148c</Color>
+            <Color x:Key="background">#B7E4C7</Color>
+            <Color x:Key="button">#74C69D</Color>
+            <Color x:Key="text">#081C15</Color> 
+            <Color x:Key="delete">#FFFFFF</Color>
+            <Color x:Key="placeholder">#2D6A4F</Color>
+
+
+
+            <!-- Globals -->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource text}"/>
+            </Style>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="#74C69D"/>
+                <Setter Property="BarTextColor" Value="#081C15"/>
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="{StaticResource background}"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource button}"/>
+                <Setter Property="TextColor" Value="{StaticResource text}"/>
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="{StaticResource text}"/>
+                <Setter Property="PlaceholderColor" Value="{StaticResource placeholder}"/>
+            </Style>
+            
+
             <Style x:Key="Title" TargetType="Label">
                 <Setter Property="VerticalTextAlignment" Value="Center"/>
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
