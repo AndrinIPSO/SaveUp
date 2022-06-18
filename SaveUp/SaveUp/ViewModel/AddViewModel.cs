@@ -1,12 +1,23 @@
-﻿using SaveUp.Model;
+﻿using Newtonsoft.Json;
+using SaveUp.Model;
 using System;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using Xamarin.Forms;
 
 namespace SaveUp.ViewModel
 {
     public class AddViewModel : ViewModelBase
     {
+        /// <summary>
+        /// HTTP URL Konstante
+        /// </summary>
+        private const string BASE_URL = "http://andrinschellenberg.ch/rest/";
+        /// <summary>
+        /// HTTP Client Objekt
+        /// </summary>
+        private HttpClient _client = new HttpClient();
         /// <summary>
         /// Wird verwendet um später ein vollständiges Objekt der Liste anzufügen
         /// </summary>
@@ -41,14 +52,35 @@ namespace SaveUp.ViewModel
         {
             Add = new Command(AddItem);
             tempModel = new EintragModel();
+            _client.BaseAddress = new Uri(BASE_URL);
 
         }
         /// <summary>
         /// Fügt neues Model ein, wechselt zur Mainpage
         /// </summary>
-        void AddItem()
+        async void AddItem()
         {
             Datum = DateTime.Now.ToString("dd.MM.yyyy");
+
+            try
+            {
+                _client.DefaultRequestHeaders.Accept.Clear();
+                _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                StringContent content = new StringContent(JsonConvert.SerializeObject(tempModel), System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _client.PostAsync("api/create.php", content);
+                
+                if (!response.IsSuccessStatusCode)
+                {
+
+                    await App.Current.MainPage.DisplayAlert("Server Fehler",response.StatusCode.ToString(),"OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Fehler", ex.Message, "OK");
+            }
+
+
             if (eintragdaten.Count == 0)
             {
                 ID = 0;
@@ -57,6 +89,9 @@ namespace SaveUp.ViewModel
             {
                 ID = eintragdaten[eintragdaten.Count - 1].id + 1;
             }
+
+
+
             eintragdaten.Add(tempModel);
             MainViewModel mvm = new MainViewModel(eintragdaten);
             Application.Current.MainPage.BindingContext = mvm; // << Villeicht weglassen?
