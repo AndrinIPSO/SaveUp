@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SaveUp.Model;
+using SaveUp.Utilities;
 using System;
 using System.Collections.ObjectModel;
 using System.Net.Http;
@@ -11,13 +12,9 @@ namespace SaveUp.ViewModel
     public class AddViewModel : ViewModelBase
     {
         /// <summary>
-        /// HTTP URL Konstante
+        /// REST Client
         /// </summary>
-        private const string BASE_URL = "http://andrinschellenberg.ch/rest/";
-        /// <summary>
-        /// HTTP Client Objekt
-        /// </summary>
-        private HttpClient _client = new HttpClient();
+        REST rest;
         /// <summary>
         /// Wird verwendet um später ein vollständiges Objekt der Liste anzufügen
         /// </summary>
@@ -52,33 +49,16 @@ namespace SaveUp.ViewModel
         {
             Add = new Command(AddItem);
             tempModel = new EintragModel();
-            _client.BaseAddress = new Uri(BASE_URL);
-
+            rest = new REST();
         }
         /// <summary>
         /// Fügt neues Model ein, wechselt zur Mainpage
         /// </summary>
-        async void AddItem()
+        void AddItem()
         {
             Datum = DateTime.Now.ToString("dd.MM.yyyy");
 
-            try
-            {
-                _client.DefaultRequestHeaders.Accept.Clear();
-                _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                StringContent content = new StringContent(JsonConvert.SerializeObject(tempModel), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _client.PostAsync("api/create.php", content);
-                
-                if (!response.IsSuccessStatusCode)
-                {
-
-                    await App.Current.MainPage.DisplayAlert("Server Fehler",response.StatusCode.ToString(),"OK");
-                }
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Fehler", ex.Message, "OK");
-            }
+            rest.Add(tempModel);
 
 
             if (eintragdaten.Count == 0)
@@ -93,15 +73,15 @@ namespace SaveUp.ViewModel
 
 
             eintragdaten.Add(tempModel);
-            MainViewModel mvm = new MainViewModel(eintragdaten);
+            MainViewModel mvm = new MainViewModel();
             Application.Current.MainPage.BindingContext = mvm; // << Villeicht weglassen?
-            mvm.Gesamtbetrag = this.Gesamtbetrag;
+            //mvm.Gesamtbetrag = Gesamtbetrag;
             App.Current.MainPage = new NavigationPage(new MainPage(mvm));
         }
         /// <summary>
         /// Verändert Name des tempörären Models (typ = EintragModel)
         /// </summary>
-        public string Name
+        public string? Name
         {
             get { return tempModel.Name; }
             set
@@ -113,7 +93,7 @@ namespace SaveUp.ViewModel
         /// <summary>
         /// Verändert Datum des tempörären Models (typ = EintragModel)
         /// </summary>
-        public string Datum
+        public string? Datum
         {
             get { return tempModel.Datum; }
             set
@@ -125,7 +105,7 @@ namespace SaveUp.ViewModel
         /// <summary>
         /// Verändert Betrag des tempörären Models (typ = EintragModel)
         /// </summary>
-        public float Betrag
+        public float? Betrag
         {
             get { return tempModel.Betrag; }
             set
@@ -149,11 +129,11 @@ namespace SaveUp.ViewModel
         /// <summary>
         /// Gesamtbetrag berechnen für MainViewModel
         /// </summary>
-        public float Gesamtbetrag
+        public float? Gesamtbetrag
         {
             get
             {
-                float gesamtfloat = 0;
+                float? gesamtfloat = 0;
                 foreach (var item in EintragDaten)
                 {
                     gesamtfloat += item.Betrag;

@@ -10,8 +10,8 @@ namespace SaveUp
         /// </summary>
         public MainPage()
         {
-            BindingContext = new MainViewModel();
             InitializeComponent();
+            BindingContext = new MainViewModel();
         }
         /// <summary>
         /// Beim Seitenwechsel aufegrufen, erhält ViewModel
@@ -19,8 +19,8 @@ namespace SaveUp
         /// <param name="mvm">Übergabe von ViewModel</param>
         public MainPage(MainViewModel mvm)
         {
-            BindingContext = mvm;
             InitializeComponent();
+            BindingContext = mvm;
         }
     }
 }

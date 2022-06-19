@@ -1,4 +1,5 @@
 ﻿using SaveUp.Model;
+using SaveUp.Utilities;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -8,6 +9,10 @@ namespace SaveUp.ViewModel
     public class ListViewModel : ViewModelBase
     {
         /// <summary>
+        /// REST objekt für alle HTTP opearationen
+        /// </summary>
+        REST rest = new REST();
+        /// <summary>
         /// Daten kollektion (liste) -> wird an alle viremodels weitergegeben
         /// </summary>
         ObservableCollection<EintragModel> eintragdaten = new ObservableCollection<EintragModel>();
@@ -16,7 +21,12 @@ namespace SaveUp.ViewModel
         /// </summary>
         public ObservableCollection<EintragModel> EintragDaten
         {
-            get { return eintragdaten; }
+            get 
+            {
+                
+                return eintragdaten;
+                 
+            }
             set
             {
                 if (eintragdaten != value)
@@ -41,12 +51,15 @@ namespace SaveUp.ViewModel
         {
             DeleteAll = new Command(delAll);
             Delete = new Command<int>(id => { delete(id); });
+            ObservableCollection<EintragModel> tmp = rest.getModels();
+            EintragDaten = tmp;
         }
         /// <summary>
         /// Löscht alle Daten in Datenliste und übergibt Liste zur Mainpage und welchslet zur Mainpage
         /// </summary>
         async void delAll()
         {
+
             if (eintragdaten.Count == 0)
             {
                 return;
@@ -55,7 +68,7 @@ namespace SaveUp.ViewModel
             if (delall)
             {
                 eintragdaten.Clear();
-                MainViewModel mvm = new MainViewModel(eintragdaten);
+                MainViewModel mvm = new MainViewModel();
                 Application.Current.MainPage.BindingContext = mvm;
                 mvm.EintragDaten = this.EintragDaten;
                 App.Current.MainPage = new NavigationPage(new MainPage(mvm));
@@ -67,15 +80,16 @@ namespace SaveUp.ViewModel
         /// <param name="id">Zu löschendes Element</param>
         async void delete(int id)
         {
+
             bool del = await App.Current.MainPage.DisplayAlert("Löschen", "Eintrag löschen?", "Ja", "Ah nei doch nöd");
             if (del)
             {
                 ObservableCollection<EintragModel> templist = eintragdaten;
-
                 for (int i = templist.Count - 1; i >= 0; i--)
                 {
                     if (id == templist[i].id)
                     {
+                        rest.Delete(templist[i]);
                         templist.Remove(templist[i]);
                     }
                 }
@@ -88,19 +102,18 @@ namespace SaveUp.ViewModel
             {
                 return;
             }
-            MainViewModel mvm = new MainViewModel(eintragdaten);
+            MainViewModel mvm = new MainViewModel();
             Application.Current.MainPage.BindingContext = mvm;
-            mvm.Gesamtbetrag = this.Gesamtbetrag;
             App.Current.MainPage = new NavigationPage(new MainPage(mvm));
         }
         /// <summary>
         /// Berechnen Gesamtbetrag für Mainpage
         /// </summary>
-        public float Gesamtbetrag
+        public float? Gesamtbetrag
         {
             get
             {
-                float gesamtfloat = 0;
+                float? gesamtfloat = 0;
                 foreach (var item in EintragDaten)
                 {
                     gesamtfloat += item.Betrag;

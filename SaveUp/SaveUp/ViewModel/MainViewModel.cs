@@ -1,4 +1,5 @@
 ﻿using SaveUp.Model;
+using SaveUp.Utilities;
 using SaveUp.View;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
@@ -26,10 +27,9 @@ namespace SaveUp.ViewModel
                 }
             }
         }
-        /// <summary>
-        /// Gesamtbetrag wird in andern Viewmodels berechnet. 
-        /// </summary>
-        private float _gesamtbetrag = 0;
+        REST rest = new REST();
+
+
         /// <summary>
         /// Öffnet AddSeite
         /// </summary>
@@ -43,31 +43,28 @@ namespace SaveUp.ViewModel
         /// </summary>
         public MainViewModel()
         {
+            ObservableCollection<EintragModel> tmp = rest.getModels();
             OpenAdd = new Command(OpenAddPage);
             OpenList = new Command(OpenListPage);
-        }
-        /// <summary>
-        /// Init Commands und übergabe Datenmodel(liste)
-        /// </summary>
-        /// <param name="list">Model liste</param>
-        public MainViewModel(ObservableCollection<EintragModel> list)
-        {
-            EintragDaten = list;
-            OpenAdd = new Command(OpenAddPage);
-            OpenList = new Command(OpenListPage);
+            EintragDaten = tmp;
         }
         /// <summary>
         /// Verändern Gesamtbetrag (get/set)
         /// </summary>
-        public float Gesamtbetrag
+        public float? Gesamtbetrag
         {
             get
             {
-                return _gesamtbetrag;
+                float? gesamtfloat = 0;
+                foreach (var item in EintragDaten)
+                {
+                    gesamtfloat += item.Betrag;
+                }
+                return gesamtfloat;
             }
-            set
+
+            set 
             {
-                _gesamtbetrag = value;
                 OnPropertyChanged();
             }
         }
@@ -77,7 +74,6 @@ namespace SaveUp.ViewModel
         async void OpenAddPage()
         {
             AddViewModel avm = new AddViewModel();
-            avm.EintragDaten = this.EintragDaten;
             await Application.Current.MainPage.Navigation.PushAsync(new AddPage(avm));
 
         }
@@ -87,7 +83,6 @@ namespace SaveUp.ViewModel
         async void OpenListPage()
         {
             ListViewModel lvm = new ListViewModel();
-            lvm.EintragDaten = this.EintragDaten;
             await Application.Current.MainPage.Navigation.PushAsync(new ListPage(lvm));
         }
     }
