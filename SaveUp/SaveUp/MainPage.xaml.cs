@@ -1,4 +1,5 @@
-﻿using SaveUp.ViewModel;
+﻿using SaveUp.Utilities;
+using SaveUp.ViewModel;
 using Xamarin.Forms;
 
 namespace SaveUp
@@ -10,8 +11,10 @@ namespace SaveUp
         /// </summary>
         public MainPage()
         {
+            REST rest = new REST();
+            MainViewModel mvm = new MainViewModel();
+            BindingContext = mvm;
             InitializeComponent();
-            BindingContext = new MainViewModel();
         }
         /// <summary>
         /// Beim Seitenwechsel aufegrufen, erhält ViewModel

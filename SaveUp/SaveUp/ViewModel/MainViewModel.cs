@@ -1,7 +1,10 @@
-﻿using SaveUp.Model;
+﻿using Newtonsoft.Json;
+using SaveUp.Model;
 using SaveUp.Utilities;
 using SaveUp.View;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using Xamarin.Forms;
 
 namespace SaveUp.ViewModel
@@ -43,28 +46,31 @@ namespace SaveUp.ViewModel
         /// </summary>
         public MainViewModel()
         {
-            ObservableCollection<EintragModel> tmp = rest.getModels();
+            Gesamtbetrag = 0;
+            EintragDaten = JsonFileHelper.readFromFile();
             OpenAdd = new Command(OpenAddPage);
             OpenList = new Command(OpenListPage);
-            EintragDaten = tmp;
+            foreach (var item in EintragDaten)
+            {
+                Gesamtbetrag += item.Betrag;
+            }
+
         }
         /// <summary>
         /// Verändern Gesamtbetrag (get/set)
         /// </summary>
+        private float? _gesamtbetrag { get; set; }
+
         public float? Gesamtbetrag
         {
             get
             {
-                float? gesamtfloat = 0;
-                foreach (var item in EintragDaten)
-                {
-                    gesamtfloat += item.Betrag;
-                }
-                return gesamtfloat;
+                return _gesamtbetrag;
             }
 
             set 
             {
+                _gesamtbetrag = value;
                 OnPropertyChanged();
             }
         }
@@ -74,6 +80,7 @@ namespace SaveUp.ViewModel
         async void OpenAddPage()
         {
             AddViewModel avm = new AddViewModel();
+            avm.EintragDaten = EintragDaten;
             await Application.Current.MainPage.Navigation.PushAsync(new AddPage(avm));
 
         }

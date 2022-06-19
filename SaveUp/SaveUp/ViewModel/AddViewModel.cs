@@ -3,6 +3,7 @@ using SaveUp.Model;
 using SaveUp.Utilities;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Xamarin.Forms;
@@ -69,10 +70,8 @@ namespace SaveUp.ViewModel
             {
                 ID = eintragdaten[eintragdaten.Count - 1].id + 1;
             }
-
-
-
             eintragdaten.Add(tempModel);
+            JsonFileHelper.SyncToFile(EintragDaten);
             MainViewModel mvm = new MainViewModel();
             Application.Current.MainPage.BindingContext = mvm; // << Villeicht weglassen?
             //mvm.Gesamtbetrag = Gesamtbetrag;

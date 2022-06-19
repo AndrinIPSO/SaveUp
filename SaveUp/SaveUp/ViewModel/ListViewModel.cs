@@ -67,7 +67,14 @@ namespace SaveUp.ViewModel
             bool delall = await App.Current.MainPage.DisplayAlert("Warnung", "Alle Einträge werden Gelöscht!", "Passt", "Abbrechen");
             if (delall)
             {
+                foreach (EintragModel item in EintragDaten)
+                {
+                    rest.Delete(item);
+                }
+
+
                 eintragdaten.Clear();
+                JsonFileHelper.SyncToFile(EintragDaten);
                 MainViewModel mvm = new MainViewModel();
                 Application.Current.MainPage.BindingContext = mvm;
                 mvm.EintragDaten = this.EintragDaten;
@@ -93,7 +100,6 @@ namespace SaveUp.ViewModel
                         templist.Remove(templist[i]);
                     }
                 }
-                EintragDaten = templist;
 
 
 
@@ -102,6 +108,7 @@ namespace SaveUp.ViewModel
             {
                 return;
             }
+            JsonFileHelper.SyncToFile(EintragDaten);
             MainViewModel mvm = new MainViewModel();
             Application.Current.MainPage.BindingContext = mvm;
             App.Current.MainPage = new NavigationPage(new MainPage(mvm));
